@@ -31,7 +31,6 @@ logexp <- function(exposure = 1)
                  name = link),
             class = "link-glm")
 }
-
 #setwd("D:\\Dropbox\\R\\RStudioProjects\\NestSuccess")#Widnows
 #setwd("/mnt/Removable/Dropbox/R/RStudioProjects/NestSuccess")#Maxtop ubuntu
 setwd("/home/max/Dropbox/R/RStudioProjects/NestSuccess")
