@@ -121,7 +121,7 @@ summary(bic.glm(FATE ~ Core10km + Edge60m + OrdDate
 summary(bic.glm(FATE ~ Year + Core10km + Edge60m
         + ParaStat*TrailDist  
         + ParaStat*WBH + GPH*WBH
-      # + ParaStat*WTR + GPH*WTR 
+       + ParaStat*WTR + GPH*WTR 
         + GPH*TrailDist  + GPH*OrdDate,
         glm.family = binomial(logexp(exposure = ACFL.mah$EXP)), data = ACFL.mah))
 
