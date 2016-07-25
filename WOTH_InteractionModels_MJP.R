@@ -120,9 +120,9 @@ for (i in 12:26){
 ####################################
 
 WOTH.MJP.BMA <- bic.glm(FATE ~ 
-                          CoreArea + EdgeDist +
+                          Core10km +
                           TrailDist*ParaStat +
-                          OrdDate*GPH + ParaStat*WBH + 
+                          ParaStat*WBH + 
                           WBH*GPH, glm.family = binomial(logexp(exposure = WOTH.MJP$EXP)), data = WOTH.MJP)
 imageplot.bma(WOTH.MJP.BMA)
 summary(WOTH.MJP.BMA)
