@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{parskip}
+
+\title{Follow-up analysis American Robin (\textsc{AMRO}) nest success along trails\\ (with interactions)}
+\author{Max A Henschell}
+\begin{document}
+% \SweaveOpts{concordance=TRUE}
+% % \SweaveOpts{concordance=TRUE}
+% \SweaveOpts{width=10, height = 8}
+
+\maketitle
+
+This document is follow-up analysis following comments from \textit{Landscape and Urban Planning}. The reviewers suggested that combining data from Marty (herein \textsc{MJP}) and Max (herein \textsc{MAH}) was not appropriate.\\
+Below are the results from separating the analysis of the two studies. I used \texttt{BMA} with no interactions (not shown) to guide the selection of variables in the final models,% exlcuding variables with $(P{\neq}0) < 0.2$, 
+plus incorporated seemingly ecologically meaninful interactions into the final full model.
+\newpage
+% Figure ~\ref{fig:MJPCorr} shows the correlation between measured variables for the \textsc{MJP} portion of the study.\\
+% Figure ~\ref{fig:MAHCorr} shows the correlation between measured variables for the \textsc{MAH} portion of the study.\\
+
+
+%Correlation plots for individual studies are presented first, followed by the results of individual and combined Bayesian model averaging (\textsc{BMA}).
+
+<<include=FALSE, echo=FALSE, results='hide'>>=
+source("AMRO_InteractionModels_MJP.R")
+source("AMRO_InteractionModels_MAH.R")
+source("AMRO_InteractionModels_Combined.R")
+lapply(packages.list, require, character.only=T)
+@
+
+%\section*{Variable Correlations}
+
+%\begin{landscape}
+\begin{figure}[!htbp]
+\centering
+<<echo=FALSE, results='hide'>>=
+####################################
+#
+#Correlation for MJP
+#
+####################################
+corrplot.mixed(cor(AMRO.MJP.nl[,c(11:23)]))
+
+@
+\caption{Correlation of potential explanatory variables for \textsc{MJP AMRO} nests}
+\label{fig:MJPCorr}
+\end{figure}
+\begin{center}
+\end{center}
+%\end{landscape}
+
+%\begin{landscape}
+\begin{figure}[!htbp]
+\centering
+<<echo=FALSE, results='hide'>>=
+####################################
+#
+#Correlation MAH
+#
+####################################
+corrplot.mixed(cor(AMRO.MAH.nl[,c(11:23)]))
+@
+\caption{Correlation of potential explanatory variables  for \textsc{MAH AMRO} nests}
+\label{fig:MAHCorr}
+\end{figure}
+\begin{center}
+\end{center}
+%\end{landscape}
+% variables:\\
+% Forest1km: proportion forest cover within 1 km of nest -> all studies\\
+% Road1km: km of roads within 1 km of nest -> all studies\\
+% Homesteads1km : number of homesteads within 1 km of nest -> all studies\\
+% RoadDist: distance to closest road -> all studies\\
+% W2: trail width at 1.3 m from ground -> all studies\\
+% GPH: groups per hour -> MAH,MJP\\
+% TPH: trees pre hectare around nest -> MAH\\
+% BA\_ha: basal area per hectare around nest -> MAH,MJP\\
+% TYPE: trail type: constructed, old road -> all studies\\
+% PLOT: trail name -> all studies\\
+% HEIGHT: nest height -> all studies\\
+% DIST: distance from nest to trail -> all studies\\
+% ORIENT: Nest orientation from trail: 90 = opposite side of tree from trail\\
+% OrdDate: Ordinal date from Jan 1 - 140 -> all studies\\
+% STUDY: study\\
+% YEAR: year of nest\\
+% NEST: nest ID\\
+
+
+\begin{figure}[!htbp]
+<<echo=FALSE, results='hide'>>=
+imageplot.bma(AMRO.MJP.BMA, color = c("blue", "red", "white"), order = "mds")
+@
+\caption{Variable selection for \texttt{BMA} from \textsc{MJP} data.
+\textcolor{red}{Red} indicates a negative association with nest success, \textcolor{blue}{blue} indicates positive.}
+\label{fig:MJPBMAimage}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+<<echo=FALSE, results='hide'>>=
+imageplot.bma(AMRO.MAH.BMA, color = c("blue", "red", "white"), order = "mds")
+@
+\caption{Variable selection for \texttt{BMA} from \textsc{MAH} data.
+\textcolor{red}{Red} indicates a negative association with nest success, \textcolor{blue}{blue} indicates positive.}
+\label{fig:MAHBMAimage}
+\end{figure}
+
+%\begin{landscape}
+<<echo=FALSE, results= 'asis'>>=
+xtable(MJP.BMA.df[-c((nrow(MJP.BMA.df)-3):nrow(MJP.BMA.df)),c(1:3)], caption = "Tabular results from \\texttt{BMA} for \\textsc{MJP} data")
+xtable(MAH.BMA.df[-c((nrow(MAH.BMA.df)-3):nrow(MAH.BMA.df)),c(1:3)], caption = "Tabular results from \\texttt{BMA} for \\textsc{MAH} data")
+#xtable(BMA.df[-c((nrow(BMA.df)-3):nrow(BMA.df)),c(1:4)], caption = "Tabular results from \\texttt{BMA} for \\textsc{MJP+MAH} data")
+@
+%\end{landscape}
+
+\begin{figure}[!htbp]
+<<echo=FALSE, results='hide'>>=
+imageplot.bma(AMRO.BMA, color = c("blue", "red", "white"), order = "mds")
+@
+\caption{Variable selection for \texttt{BMA} from \textsc{MAH+MJP} data.
+\textcolor{red}{Red} indicates a negative association with nest success, \textcolor{blue}{blue} indicates positive.}
+\label{fig:MAHBMAimage}
+\end{figure}
+
+%\begin{landscape}
+<<echo=FALSE, results= 'asis'>>=
+#xtable(MJP.BMA.df[-c((nrow(MJP.BMA.df)-3):nrow(MJP.BMA.df)),c(1:4)], caption = "Tabular results from \\texttt{BMA} for \\textsc{MJP} data")
+#xtable(MAH.BMA.df[-c((nrow(MAH.BMA.df)-3):nrow(MAH.BMA.df)),c(1:4)], caption = "Tabular results from \\texttt{BMA} for \\textsc{MAH} data")
+xtable(BMA.df[-c((nrow(BMA.df)-3):nrow(BMA.df)),c(1:3)], caption = "Tabular results from \\texttt{BMA} for \\textsc{MJP+MAH} data")
+@
+%\end{landscape}
+
+\end{document}

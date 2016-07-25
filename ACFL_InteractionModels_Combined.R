@@ -19,6 +19,13 @@ packages.list<-c('MuMIn','BMA','xtable','RCurl', 'reshape', 'ggplot2', 'corrplot
 required.packages <- packages.list
 new.packages <- required.packages[!(required.packages %in% installed.packages()[,'Package'])]
 if(length(new.packages)) install.packages(new.packages, repos = 'http://cran.rstudio.com/')
+# packages.list2<-c('coefplot2')
+# required.packages2 <- packages.list2
+# new.packages2 <- required.packages2[!(required.packages2 %in% installed.packages()[,'Package'])]
+# if(length(new.packages2)) install.packages(new.packages2, ,
+#                                            repos='http://www.math.mcmaster.ca/bolker/R',
+#                                            type='source')
+# packages.list<-c('BMA','xtable','RCurl', 'bbmle', 'reshape', 'ggplot2', 'BEST', 'arm', 'MCMCpack', 'popbio', 'extrafont', 'coefplot2')
 lapply(packages.list, require, character.only=T)
 # 
 # library(BMA)
@@ -80,31 +87,29 @@ source_https('https://raw.github.com/maxhenschell/R-functions/master/logexp.R',
 
 ####################################
 #
-# AMRO
+# ACFL
 #
 ####################################
 
-AMRO <- read.csv('DSR-AMRO.csv', header = T, na.strings = 'NA')
-AMRO <- AMRO[AMRO$EXP != 0,]#Remove exp = 0 (first visit or visits after termination)
-AMRO <- AMRO[complete.cases(AMRO),]
-AMRO.MAH <- AMRO[AMRO$Study %in% "MAH",]
-AMRO.MAH$Study <- factor(AMRO.MAH$Study)
-AMRO.MAH$Year <- factor(AMRO.MAH$Year)
-AMRO.MAH$PlotType <- factor(AMRO.MAH$PlotType)
-AMRO.MAH$PatchType <- factor(AMRO.MAH$PatchType)
-AMRO.MAH$GPH[AMRO.MAH$GPH == 0.00] <- (min(AMRO.MAH$GPH[AMRO.MAH$GPH > 0]))/2
-AMRO.MAH$OrdDate <- AMRO.MAH$OrdDate-min(AMRO.MAH$OrdDate)+1
-AMRO.MAH$OrdDate2 <- AMRO.MAH$OrdDate^2
-AMRO.MAH$ParaStat <- as.factor(AMRO.MAH$ParaStat)
-AMRO.MAH$Year <- as.factor(AMRO.MAH$Year)
-AMRO.MAH1 <- AMRO.MAH
-AMRO.MAH.nl <- AMRO.MAH1[!duplicated(AMRO.MAH[,1]),]
+ACFL <- read.csv('DSR-ACFL.csv', header = T, na.strings = 'NA')
+
+ACFL <- ACFL[ACFL$EXP != 0,]#Remove exp = 0 (first visit or visits after termination)
+ACFL <- ACFL[complete.cases(ACFL),]
+ACFL <- ACFL[ACFL$Study %in% c("MAH","MJP"),]
+ACFL$Study <- factor(ACFL$Study)
+# ACFL$Year <- factor(ACFL$Year)
+
+ACFL$GPH[ACFL$GPH == 0.00] <- (min(ACFL$GPH[ACFL$GPH > 0]))/2
+ACFL$OrdDate <- ACFL$OrdDate-min(ACFL$OrdDate)+1
+ACFL$OrdDate2 <- ACFL$OrdDate^2
+ACFL$ParaStat <- as.factor(ACFL$ParaStat)
+ACFL$Year <- as.factor(ACFL$Year)
+ACFL1 <- ACFL
+ACFL.nl <- ACFL1[!duplicated(ACFL[,1]),]
 
 #Center and scale
-head(AMRO.MAH[,c(11:23)])
-str(AMRO.MAH)
-for (i in 11:23){
-  AMRO.MAH[,i] <- (AMRO.MAH[,i] - mean(AMRO.MAH[,i]))/sd(AMRO.MAH[,i])
+for (i in 12:26){
+  ACFL[,i] <- (ACFL[,i] - mean(ACFL[,i]))/sd(ACFL[,i])
 }
 
 ####################################
@@ -113,8 +118,13 @@ for (i in 11:23){
 # Develop a full model, then run code
 #
 ####################################
-str(AMRO.MAH)
-AMRO.MAH.BMA <- bic.glm(FATE ~ Edge60m + OrdDate + CoreArea + TrailDist+ WBH + GPH + EdgeDist + PlotType, glm.family = binomial(logexp(exposure = AMRO.MAH$EXP)), data = AMRO.MAH)
-imageplot.bma(AMRO.MAH.BMA)
-summary(AMRO.MAH.BMA)
-#MAH.BMA.df <- data.frame(summary(AMRO.MAH.BMA))
+
+ACFL.BMA <- bic.glm(FATE ~ 
+                          Edge60m*Study + CoreArea*Study + 
+                          EdgeDist*Study + TrailDist*Study +
+                          OrdDate*GPH*Study + ParaStat*WBH*Study + 
+                           WBH*GPH*Study, glm.family = binomial(logexp(exposure = ACFL$EXP)), data = ACFL)
+imageplot.bma(ACFL.BMA)
+summary(ACFL.BMA)
+
+BMA.df <- data.frame(summary(ACFL.BMA))

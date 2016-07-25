@@ -85,11 +85,8 @@ source_https('https://raw.github.com/maxhenschell/R-functions/master/logexp.R',
 ####################################
 
 AMRO <- read.csv('DSR-AMRO.csv', header = T, na.strings = 'NA')
-# AMRO$PatchArea <- as.numeric(levels(AMRO$PatchArea))[AMRO$PatchArea]
-# AMRO$CoreArea <- as.numeric(levels(AMRO$CoreArea))[AMRO$CoreArea]
 AMRO <- AMRO[AMRO$EXP != 0,]#Remove exp = 0 (first visit or visits after termination)
-AMRO <- AMRO[complete.cases(AMRO[,c('FATE','EXP','Year','TrailDist', 'WTR', 'WBH', 'GPH','CoreArea', 
-                                    'RoadDist', 'EdgeDist')]),]
+AMRO <- AMRO[complete.cases(AMRO),]
 AMRO.MJP <- AMRO[AMRO$Study %in% "MJP",]
 AMRO.MJP$Study <- factor(AMRO.MJP$Study)
 AMRO.MJP$Year <- factor(AMRO.MJP$Year)
@@ -104,9 +101,11 @@ AMRO.MJP1 <- AMRO.MJP
 AMRO.MJP.nl <- AMRO.MJP1[!duplicated(AMRO.MJP[,1]),]
 
 #Center and scale
-head(AMRO.MJP[,c(13:25)])
+head(AMRO.MJP[,c(11:23)])
 str(AMRO.MJP)
-for (i in 13:25){AMRO.MJP[,i] <- (AMRO.MJP[,i] - mean(AMRO.MJP[,i]))/sd(AMRO.MJP[,i])}
+for (i in 11:23){
+  AMRO.MJP[,i] <- (AMRO.MJP[,i] - mean(AMRO.MJP[,i]))/sd(AMRO.MJP[,i])
+}
 
 ####################################
 #
@@ -115,7 +114,7 @@ for (i in 13:25){AMRO.MJP[,i] <- (AMRO.MJP[,i] - mean(AMRO.MJP[,i]))/sd(AMRO.MJP
 #
 ####################################
 str(AMRO.MJP)
-AMRO.MJP.BMA <- bic.glm(FATE ~ Core10km + Edge60m + OrdDate + CoreArea + TrailDist+ WBH + GPH + EdgeDist +PatchType + PlotType, glm.family = binomial(logexp(exposure = AMRO.MJP$EXP)), data = AMRO.MJP)
+AMRO.MJP.BMA <- bic.glm(FATE ~ Edge60m + OrdDate + CoreArea + TrailDist+ WBH + GPH + EdgeDist + PlotType, glm.family = binomial(logexp(exposure = AMRO.MJP$EXP)), data = AMRO.MJP)
 imageplot.bma(AMRO.MJP.BMA)
 summary(AMRO.MJP.BMA)
-MJP.BMA.df <- data.frame(summary(AMRO.MJP.BMA))
+#MJP.BMA.df <- data.frame(summary(AMRO.MJP.BMA))
