@@ -120,9 +120,10 @@ for (i in 12:26){
 ####################################
 
 ACFL.MJP.BMA <- bic.glm(FATE ~ 
-                          Edge60m + CoreArea + 
-                          EdgeDist + TrailDist +
-                          OrdDate*GPH + ParaStat*WBH + 
+                          CoreArea +
+                          OrdDate*GPH + 
+                          ParaStat*WBH + 
+                          ParaStat*OrdDate + 
                            WBH*GPH, glm.family = binomial(logexp(exposure = ACFL.MJP$EXP)), data = ACFL.MJP)
 imageplot.bma(ACFL.MJP.BMA)
 summary(ACFL.MJP.BMA)

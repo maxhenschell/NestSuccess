@@ -32,40 +32,40 @@ lapply(packages.list, require, character.only=T)
 %\section*{Variable Correlations}
 
 %\begin{landscape}
-\begin{figure}[!htbp]
-\centering
-<<echo=FALSE, results='hide'>>=
-####################################
-#
-#Correlation for MJP
-#
-####################################
-corrplot.mixed(cor(AMRO.MJP.nl[,c(11:23)]))
-
-@
-\caption{Correlation of potential explanatory variables for \textsc{MJP AMRO} nests}
-\label{fig:MJPCorr}
-\end{figure}
-\begin{center}
-\end{center}
-%\end{landscape}
-
-%\begin{landscape}
-\begin{figure}[!htbp]
-\centering
-<<echo=FALSE, results='hide'>>=
-####################################
-#
-#Correlation MAH
-#
-####################################
-corrplot.mixed(cor(AMRO.MAH.nl[,c(11:23)]))
-@
-\caption{Correlation of potential explanatory variables  for \textsc{MAH AMRO} nests}
-\label{fig:MAHCorr}
-\end{figure}
-\begin{center}
-\end{center}
+%' \begin{figure}[!htbp]
+%' \centering
+%' <<echo=FALSE, results='hide'>>=
+%' ####################################
+%' #
+%' #Correlation for MJP
+%' #
+%' ####################################
+%' corrplot.mixed(cor(AMRO.MJP.nl[,c(11:23)]))
+%' 
+%' @
+%' \caption{Correlation of potential explanatory variables for \textsc{MJP AMRO} nests}
+%' \label{fig:MJPCorr}
+%' \end{figure}
+%' \begin{center}
+%' \end{center}
+%' %\end{landscape}
+%' 
+%' %\begin{landscape}
+%' \begin{figure}[!htbp]
+%' \centering
+%' <<echo=FALSE, results='hide'>>=
+%' ####################################
+%' #
+%' #Correlation MAH
+%' #
+%' ####################################
+%' corrplot.mixed(cor(AMRO.MAH.nl[,c(11:23)]))
+%' @
+%' \caption{Correlation of potential explanatory variables  for \textsc{MAH AMRO} nests}
+%' \label{fig:MAHCorr}
+%' \end{figure}
+%' \begin{center}
+%' \end{center}
 %\end{landscape}
 % variables:\\
 % Forest1km: proportion forest cover within 1 km of nest -> all studies\\

@@ -119,9 +119,7 @@ for (i in 11:23){
 ####################################
 
 AMRO.MAH.BMA <- bic.glm(FATE ~ 
-                          Edge60m + CoreArea + 
-                          EdgeDist + TrailDist +
-                          OrdDate*GPH +
+                          CoreArea + Edge60m + 
                            WBH*GPH, glm.family = binomial(logexp(exposure = AMRO.MAH$EXP)), data = AMRO.MAH)
 imageplot.bma(AMRO.MAH.BMA)
 summary(AMRO.MAH.BMA)

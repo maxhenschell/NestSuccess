@@ -13,7 +13,7 @@
 \maketitle
 
 This document is follow-up analysis following comments from \textit{Landscape and Urban Planning}. The reviewers suggested that combining data from Marty (herein \textsc{MJP}) and Max (herein \textsc{MAH}) was not appropriate.\\
-Below are the results from separating the analysis of the two studies. I used \texttt{BMA} with no interactions (not shown) to guide the selection of variables in the final models,% exlcuding variables with $(P{\neq}0) < 0.2$, 
+Below are the results from separating the analysis of the two studies. I used \texttt{BMA} with no interactions (not shown) to guide the selection of variables in the final models, exlcuding variables with $(P{\neq}0) < 0.2$ from either dataset, 
 plus incorporated seemingly ecologically meaninful interactions into the final full model.
 \newpage
 % Figure ~\ref{fig:MJPCorr} shows the correlation between measured variables for the \textsc{MJP} portion of the study.\\
@@ -31,41 +31,41 @@ lapply(packages.list, require, character.only=T)
 
 %\section*{Variable Correlations}
 
-%\begin{landscape}
-\begin{figure}[!htbp]
-\centering
-<<echo=FALSE, results='hide'>>=
-####################################
-#
-#Correlation for MJP
-#
-####################################
-corrplot.mixed(cor(ACFL.MJP.nl[,c(12:26)]))
-
-@
-\caption{Correlation of potential explanatory variables for \textsc{MJP ACFL} nests}
-\label{fig:MJPCorr}
-\end{figure}
-\begin{center}
-\end{center}
-%\end{landscape}
-
-%\begin{landscape}
-\begin{figure}[!htbp]
-\centering
-<<echo=FALSE, results='hide'>>=
-####################################
-#
-#Correlation MAH
-#
-####################################
-corrplot.mixed(cor(ACFL.MAH.nl[,c(12:26)]))
-@
-\caption{Correlation of potential explanatory variables for \textsc{MAH ACFL} nests}
-\label{fig:MAHCorr}
-\end{figure}
-\begin{center}
-\end{center}
+%' %\begin{landscape}
+%' \begin{figure}[!htbp]
+%' \centering
+%' <<echo=FALSE, results='hide'>>=
+%' ####################################
+%' #
+%' #Correlation for MJP
+%' #
+%' ####################################
+%' corrplot.mixed(cor(ACFL.MJP.nl[,c(12:26)]))
+%' 
+%' @
+%' \caption{Correlation of potential explanatory variables for \textsc{MJP ACFL} nests}
+%' \label{fig:MJPCorr}
+%' \end{figure}
+%' \begin{center}
+%' \end{center}
+%' %\end{landscape}
+%' 
+%' %\begin{landscape}
+%' \begin{figure}[!htbp]
+%' \centering
+%' <<echo=FALSE, results='hide'>>=
+%' ####################################
+%' #
+%' #Correlation MAH
+%' #
+%' ####################################
+%' corrplot.mixed(cor(ACFL.MAH.nl[,c(12:26)]))
+%' @
+%' \caption{Correlation of potential explanatory variables for \textsc{MAH ACFL} nests}
+%' \label{fig:MAHCorr}
+%' \end{figure}
+%' \begin{center}
+%' \end{center}
 %\end{landscape}
 % variables:\\
 % Forest1km: proportion forest cover within 1 km of nest -> all studies\\
